@@ -28,9 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/documentation.html')));
 
-app.get("/stations", (req, res) => fileUtil.cachedOrFetchedData(req, res));
-
-app.get("/messages", (req, res) => fileUtil.cachedOrFetchedData(req, res));
+app.get("/:datafield", (req, res) => fileUtil.routing(req, res));
 
 const server = app.listen(port, () => console.log('Order api listening on port ' + port));
 

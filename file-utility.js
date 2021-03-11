@@ -4,9 +4,26 @@ const fetch = require('node-fetch');
 const queries = require('./queries.js');
 
 const fileUtil = {
-    cachedOrFetchedData: function cachedOrFetchedData(req, res) {
-        let fetchOverwrite = false;
+    routing: function routing(req, res) {
         const baseName = req.path.replace(/\//g, "");
+        const allowedDatefields = Object.keys(queries);
+
+        console.log(baseName);
+
+        if (allowedDatefields.includes(baseName)) {
+            return fileUtil.cachedOrFetchedData(baseName, res);
+        }
+
+        return res.status(404).json({
+            error: {
+                status: 404,
+                message: "Not Found",
+                path: req.path
+            }
+        });
+    },
+    cachedOrFetchedData: function cachedOrFetchedData(baseName, res) {
+        let fetchOverwrite = false;
 
         path = "./data/" + baseName + ".json";
 
@@ -25,6 +42,7 @@ const fileUtil = {
                 const dateDiff = Math.abs(now - stats.mtime);
 
                 if (fetchOverwrite || dateDiff > queries[baseName].cacheTime) {
+                    console.log("fetch");
                     fetch(
                         "https://api.trafikinfo.trafikverket.se/v2/data.json", {
                             method: "POST",
@@ -35,7 +53,7 @@ const fileUtil = {
                         .then(res => res.json())
                         .then(result => fileUtil.writeToFile(res, path, JSON.stringify(result), queries[baseName].dataContainer));
                 } else {
-                    return fileUtil.sendData(res, path);
+                    return fileUtil.sendData(res, path, queries[baseName].dataContainer);
                 }
             });
         });
