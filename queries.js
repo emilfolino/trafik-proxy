@@ -74,7 +74,7 @@ const queries = {
           </QUERY>
     </REQUEST>`,
         dataContainer: "TrainAnnouncement",
-        cacheTime: 1 // 1000 * 60 * 60 * 1
+        cacheTime: 1000 * 60 * 60 * 1
     },
 };
 
