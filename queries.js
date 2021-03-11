@@ -49,7 +49,7 @@ const queries = {
     //     dataContainer: "ReasonCode",
     //     cacheTime: 1000 * 60 * 60 * 24 * 7
     // },
-    timetable: {
+    delayed: {
         query: `<REQUEST>
           <LOGIN authenticationkey="${config["API_KEY"]}" />
           <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation' schemaversion="1.6">
