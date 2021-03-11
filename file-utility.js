@@ -8,8 +8,6 @@ const fileUtil = {
         const baseName = req.path.replace(/\//g, "");
         const allowedDatefields = Object.keys(queries);
 
-        console.log(baseName);
-
         if (allowedDatefields.includes(baseName)) {
             return fileUtil.cachedOrFetchedData(baseName, res);
         }
@@ -42,7 +40,6 @@ const fileUtil = {
                 const dateDiff = Math.abs(now - stats.mtime);
 
                 if (fetchOverwrite || dateDiff > queries[baseName].cacheTime) {
-                    console.log("fetch");
                     fetch(
                         "https://api.trafikinfo.trafikverket.se/v2/data.json", {
                             method: "POST",
