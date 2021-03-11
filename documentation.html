@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trafik Proxy API documentation</title>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<main>
+    <header>
+        <h1>Trafik Proxy API documentation</h1>
+    </header>
+
+    <article>
+        <section id="toc">
+            <ol>
+                <li>
+                    <a href="#stations">Stations</a>
+                </li>
+                <li>
+                    <a href="#messages">Messages</a>
+                </li>
+                <li>
+                    <a href="#order_items">Order items</a>
+                </li>
+                <li>
+                    <a href="#examples">Code examples</a>
+                </li>
+            </ol>
+        </section>
+
+        <section id="stations">
+            <h2><a href="#stations">Stations</a></h2>
+
+            <p>A station has the following attributes:</p>
+            <pre class="lager">LocationSignature
+AdvertisedLocationName
+Geometry.WGS84
+PlatformLine</pre>
+
+            <h3>To get all stations:</h3>
+            <pre class="lager">GET /stations</pre>
+            <p>Result:</p>
+            <pre class="lager">{
+  "data": [
+    {
+      "AdvertisedLocationName": "Astrid Lindgrens värld",
+      "Geometry": {
+        "WGS84": "POINT (15.840063951305682 57.67270729523255)"
+      },
+      "LocationSignature": "Alv",
+      "PlatformLine": [
+        "1"
+      ]
+    },
+    {
+      "AdvertisedLocationName": "Aneby",
+      "Geometry": {
+        "WGS84": "POINT (14.81189626871035 57.837434576066045)"
+      },
+      "LocationSignature": "Any",
+      "PlatformLine": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "AdvertisedLocationName": "Aspen",
+      "Geometry": {
+        "WGS84": "POINT (12.240512241673448 57.75442205677955)"
+      },
+      "LocationSignature": "Apn",
+      "PlatformLine": [
+        "1",
+        "2"
+      ]
+    },
+....
+</pre>
+</section>
+
+        <section id="examples">
+            <h1>Code Examples</h1>
+            <p>All examples below show the following API calls:</p>
+
+            <pre class="lager">GET /v2/products
+PUT /v2/order
+GET /v2/invoices</pre>
+
+            <ol>
+                <li><a href="#xmlhttprequest">XMLHttpRequest</a></li>
+                <li><a href="#fetch">fetch</a></li>
+                <li><a href="#mithril">mithril m.request</a></li>
+            </ol>
+
+
+            <section id="xmlhttprequest">
+                <h3><a href="#xmlhttprequest">XMLHttpRequest</a></h3>
+
+                <pre class="lager">GET /v2/products</pre>
+                <pre>
+                    <code class="javascript">var request = new XMLHttpRequest();
+
+request.addEventListener("load", [callbackFunction]);
+request.open("GET", "https://lager.emilfolino.se/v2/products?api_key=[YOUR_API_KEY]");
+request.send();</code>
+                </pre>
+
+                <pre class="lager">PUT /v2/orders</pre>
+                <pre>
+                    <code class="javascript">// Updating status for order, setting 200 as new status
+var order = {
+    id: 1,
+    name: "Anders Andersson",
+    address: "Andersgatan 1",
+    zip: "12345",
+    city: "Anderstorp",
+    country: "Sweden",
+    status_id: 200,
+    api_key: [YOUR_API_KEY]
+};
+var json = JSON.stringify(order);
+
+var request = new XMLHttpRequest();
+request.addEventListener("load", [callbackFunction]);
+request.open("PUT", "https://lager.emilfolino.se/v2/orders");
+request.setRequestHeader('Content-type','application/json; charset=utf-8');
+request.send(json);</code>
+                </pre>
+
+                <pre class="lager">POST /v2/deliveries</pre>
+                <pre>
+                    <code class="javascript">// Creating new delivery
+var delivery = {
+    product_id: 2,
+    amount: 12,
+    delivery_date: "2018-02-14",
+    comment: "Delivery for Valentines Day",
+    api_key: [YOUR_API_KEY]
+};
+var json = JSON.stringify(delivery);
+
+var request = new XMLHttpRequest();
+request.addEventListener("load", [callbackFunction]);
+request.open("POST", "https://lager.emilfolino.se/v2/deliveries");
+request.setRequestHeader('Content-type','application/json; charset=utf-8');
+request.send(json);</code>
+                </pre>
+
+                <pre class="lager">GET /v2/invoices</pre>
+                <pre>
+                    <code class="javascript">var token = [TOKEN]; // Token received during login
+var request = new XMLHttpRequest();
+request.addEventListener("load", [callbackFunction]);
+request.open("GET", "https://lager.emilfolino.se/v2/invoices?api_key=[YOUR_API_KEY]");
+request.setRequestHeader('x-access-token', token);
+request.send();</code>
+                </pre>
+            </section>
+
+            <section id="fetch">
+                <h3><a href="#fetch">fetch</a></h3>
+
+                <pre class="lager">GET /v2/products</pre>
+                <pre>
+                    <code class="javascript">fetch("https://lager.emilfolino.se/v2/products?api_key=[YOUR_API_KEY]")
+.then(function (response) {
+    return response.json();
+}).then(function(data) {
+
+});</code>
+                </pre>
+
+                <pre class="lager">PUT /v2/orders</pre>
+                <pre>
+                    <code class="javascript">var order = {
+    id: 1,
+    name: "Anders Andersson",
+    address: "Andersgatan 1",
+    zip: "12345",
+    city: "Anderstorp",
+    country: "Sweden",
+    status_id: 200,
+    api_key: [YOUR_API_KEY]
+};
+
+fetch("https://lager.emilfolino.se/v2/orders", {
+    body: JSON.stringify(order),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'PUT'
+})
+.then(function (response) {
+
+});</code>
+                </pre>
+
+                <pre class="lager">POST /v2/deliveries</pre>
+                <pre>
+                    <code class="javascript">var delivery = {
+    product_id: 2,
+    amount: 12,
+    delivery_date: "2018-02-14",
+    comment: "Delivery for Valentines Day",
+    api_key: [YOUR_API_KEY]
+};
+
+fetch("https://lager.emilfolino.se/v2/deliveries", {
+    body: JSON.stringify(delivery),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST'
+})
+.then(function (response) {
+
+});</code>
+                </pre>
+
+                <pre class="lager">GET /v2/invoices</pre>
+                <pre>
+                    <code class="javascript">fetch("https://lager.emilfolino.se/v2/invoices?api_key=[YOUR_API_KEY]", {
+    headers: {
+      'x-access-token': [TOKEN]
+    },
+})
+.then(function (response) {
+    return response.json();
+}).then(function(data) {
+
+});</code>
+                </pre>
+            </section>
+
+            <section id="mithril">
+                <h3><a href="#mithril">mithril m.request</a></h3>
+                <pre class="lager">GET /v2/products</pre>
+                <pre>
+                    <code class="javascript">m.request({
+    method: "GET",
+    url: "https://lager.emilfolino.se/v2/products?api_key=[YOUR_API_KEY]"
+})
+.then(function(result) {
+
+});</code>
+                </pre>
+
+                <pre class="lager">PUT /v2/orders</pre>
+                <pre>
+                    <code class="javascript">var order = {
+    id: 1,
+    name: "Anders Andersson",
+    address: "Andersgatan 1",
+    zip: "12345",
+    city: "Anderstorp",
+    country: "Sweden",
+    status_id: 200,
+    api_key: [YOUR_API_KEY]
+};
+
+m.request({
+    method: "PUT",
+    url: "https://lager.emilfolino.se/v2/orders",
+    body: order
+});</code>
+                </pre>
+
+                <pre class="lager">POST /v2/deliveries</pre>
+                <pre>
+                    <code class="javascript">var delivery = {
+    product_id: 2,
+    amount: 12,
+    delivery_date: "2018-02-14",
+    comment: "Delivery for Valentines Day",
+    api_key: [YOUR_API_KEY]
+};
+
+m.request({
+    method: "POST",
+    url: "https://lager.emilfolino.se/v2/deliveries",
+    body: delivery
+});</code>
+                </pre>
+
+                <pre class="lager">GET /v2/invoices</pre>
+                <pre>
+                    <code class="javascript">m.request({
+    method: "GET",
+    url: "https://lager.emilfolino.se/v2/invoices?api_key=[YOUR_API_KEY]",
+    headers: {
+        'x-access-token': [TOKEN]
+    }
+})
+.then(function(result) {
+
+});</code>
+                </pre>
+            </section>
+        </section>
+    </article>
+</main>
+
+<footer class="footer">
+    <div class="inner-footer">
+        <p>&copy; <a href="https://emilfolino.se">Emil Folino</a></p>
+        <p>The API is used in a course given in the Webprogrammering Cluster <a href="https://dbwebb.se">dbwebb</a> at <a href="https://bth.se">Blekinge Tekniska Högskola</a>.</p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

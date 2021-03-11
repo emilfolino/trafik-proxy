@@ -5,7 +5,7 @@ const queries = require('./queries.js');
 
 const fileUtil = {
     cachedOrFetchedData: function cachedOrFetchedData(req, res) {
-        let fetchOverwrite = true;
+        let fetchOverwrite = false;
         const baseName = req.path.replace(/\//g, "");
 
         path = "./data/" + baseName + ".json";
@@ -24,7 +24,7 @@ const fileUtil = {
                 const now = Date.now();
                 const dateDiff = Math.abs(now - stats.mtime);
 
-                if (fetchOverwrite || dateDiff > 1000 * 60 * 60 * 24) {
+                if (fetchOverwrite || dateDiff > queries[baseName].cacheTime) {
                     fetch(
                         "https://api.trafikinfo.trafikverket.se/v2/data.json", {
                             method: "POST",

@@ -24,9 +24,13 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/documentation.html')));
 
 app.get("/stations", (req, res) => fileUtil.cachedOrFetchedData(req, res));
+
+app.get("/messages", (req, res) => fileUtil.cachedOrFetchedData(req, res));
 
 const server = app.listen(port, () => console.log('Order api listening on port ' + port));
 
