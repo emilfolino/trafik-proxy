@@ -35,20 +35,20 @@ const queries = {
         dataContainer: "TrainMessage",
         cacheTime: 1000 * 60 * 60 * 1
     },
-    // codes: {
-    //     query: `<REQUEST>
-    //       <LOGIN authenticationkey="${config["API_KEY"]}" />
-    //       <QUERY objecttype="ReasonCode" schemaversion="1">
-    //             <INCLUDE>Code</INCLUDE>
-    //             <INCLUDE>GroupDescription</INCLUDE>
-    //             <INCLUDE>Level1Description</INCLUDE>
-    //             <INCLUDE>Level2Description</INCLUDE>
-    //             <INCLUDE>Level3Description</INCLUDE>
-    //       </QUERY>
-    // </REQUEST>`,
-    //     dataContainer: "ReasonCode",
-    //     cacheTime: 1000 * 60 * 60 * 24 * 7
-    // },
+    codes: {
+        query: `<REQUEST>
+          <LOGIN authenticationkey="${config["API_KEY"]}" />
+          <QUERY objecttype="ReasonCode" schemaversion="1">
+                <INCLUDE>Code</INCLUDE>
+                <INCLUDE>GroupDescription</INCLUDE>
+                <INCLUDE>Level1Description</INCLUDE>
+                <INCLUDE>Level2Description</INCLUDE>
+                <INCLUDE>Level3Description</INCLUDE>
+          </QUERY>
+    </REQUEST>`,
+        dataContainer: "ReasonCode",
+        cacheTime: 1000 * 60 * 60 * 24 * 7
+    },
     delayed: {
         query: `<REQUEST>
           <LOGIN authenticationkey="${config["API_KEY"]}" />
