@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const fileUtil = require('./file-utility.js');
+const delayed = require('./delayed.js');
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/documentation.html')));
-
+app.get("/delayed", (req, res) => delayed.getTrains(req, res));
 app.get("/:datafield", (req, res) => fileUtil.routing(req, res));
 
 const server = app.listen(port, () => console.log('Order api listening on port ' + port));

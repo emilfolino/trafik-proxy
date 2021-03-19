@@ -6,9 +6,9 @@ const queries = require('./queries.js');
 const fileUtil = {
     routing: function routing(req, res) {
         const baseName = req.path.replace(/\//g, "");
-        const allowedDatefields = Object.keys(queries);
+        const allowedDatafields = Object.keys(queries);
 
-        if (allowedDatefields.includes(baseName)) {
+        if (allowedDatafields.includes(baseName)) {
             return fileUtil.cachedOrFetchedData(baseName, res);
         }
 
