@@ -6,77 +6,40 @@ const queries = require('./queries.js');
 const fileUtil = {
     routing: function routing(req, res) {
         const baseName = req.path.replace(/\//g, "");
-        const allowedDatafields = Object.keys(queries);
+            const allowedDatafields = Object.keys(queries);
 
-        if (allowedDatafields.includes(baseName)) {
-            return fileUtil.cachedOrFetchedData(baseName, res);
-        }
-
-        return res.status(404).json({
-            error: {
-                status: 404,
-                message: "Not Found",
-                path: req.path
-            }
-        });
-    },
-    cachedOrFetchedData: function cachedOrFetchedData(baseName, res) {
-        let fetchOverwrite = false;
-
-        path = "./data/" + baseName + ".json";
-
-        fs.access(path, fs.F_OK, (err) => {
-            if (err) {
-                fs.writeFileSync(path, "");
-                fetchOverwrite = true;
+            if (allowedDatafields.includes(baseName)) {
+                return fileUtil.cachedOrFetchedData(baseName, res);
             }
 
-            fs.stat(path, function(err, stats) {
-                if (err) {
-                    throw err;
-                }
-
-                const now = Date.now();
-                const dateDiff = Math.abs(now - stats.mtime);
-
-                if (fetchOverwrite || dateDiff > queries[baseName].cacheTime) {
-                    fetch(
-                        "https://api.trafikinfo.trafikverket.se/v2/data.json", {
-                            method: "POST",
-                            body: queries[baseName].query,
-                            headers: { "Content-Type": "text/xml" }
-                        }
-                    )
-                        .then(res => res.json())
-                        .then(result => fileUtil.writeToFile(res, path, JSON.stringify(result), queries[baseName].dataContainer));
-                } else {
-                    return fileUtil.sendData(res, path, queries[baseName].dataContainer);
+            return res.status(404).json({
+                error: {
+                    status: 404,
+                    message: "Not Found",
+                    path: req.path
                 }
             });
-        });
-    },
-    writeToFile: function writeToFile(res, path, jsonData, dc) {
-        fs.writeFile(path, jsonData, function (err, data) {
-            if (err) {
-                return console.log(err);
-            }
+        },
+        cachedOrFetchedData: function cachedOrFetchedData(baseName, res) {
 
-            return fileUtil.sendData(res, path, dc);
-        });
-    },
-    sendData: function sendData(res, path, dc) {
-        fs.readFile(path, 'utf8', function (err, data) {
-            if (err) {
-                return console.log(err);
-            }
+            fetch(
+                "https://api.trafikinfo.trafikverket.se/v2/data.json", {
+                    method: "POST",
+                    body: queries[baseName].query,
+                    headers: { "Content-Type": "text/xml" }
+                }
+            )
+            .then(res => res.json())
+            .then(result => {
+                const sendData = {
+                    data: result["RESPONSE"]["RESULT"][0][queries[baseName].dataContainer]
+                };
 
-            data = JSON.parse(data);
+                return res.json(sendData);
+            })
+            .catch(err => console.error(err));
 
-            const sendData = { data: data["RESPONSE"]["RESULT"][0][dc] };
+        }
+    };
 
-            return res.json(sendData);
-        });
-    }
-};
-
-module.exports = fileUtil;
+    module.exports = fileUtil;
