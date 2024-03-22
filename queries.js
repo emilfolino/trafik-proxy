@@ -52,7 +52,7 @@ const queries = {
     delayed: {
         query: `<REQUEST>
           <LOGIN authenticationkey="${config["API_KEY"]}" />
-          <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation' schemaversion="1.6">
+          <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation' schemaversion="1.9">
                 <FILTER>
                 <AND>
                     <EQ name="ActivityType" value="Avgang" />
@@ -68,9 +68,13 @@ const queries = {
                 <INCLUDE>AdvertisedTimeAtLocation</INCLUDE>
                 <INCLUDE>EstimatedTimeAtLocation</INCLUDE>
                 <INCLUDE>AdvertisedTrainIdent</INCLUDE>
+                <INCLUDE>OperationalTrainNumber</INCLUDE>
                 <INCLUDE>Canceled</INCLUDE>
                 <INCLUDE>FromLocation</INCLUDE>
                 <INCLUDE>ToLocation</INCLUDE>
+                <INCLUDE>LocationSignature</INCLUDE>
+                <INCLUDE>TimeAtLocation</INCLUDE>
+                <INCLUDE>TrainOwner</INCLUDE>
           </QUERY>
     </REQUEST>`,
         dataContainer: "TrainAnnouncement",

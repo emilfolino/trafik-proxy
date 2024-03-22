@@ -219,59 +219,69 @@ ActivityType
 AdvertisedTimeAtLocation
 EstimatedTimeAtLocation
 AdvertisedTrainIdent
+OperationalTrainNumber
 Canceled
 FromLocation
-ToLocation</pre>
+ToLocation
+LocationSignature
+TimeAtLocation
+TrainOwner</pre>
 
     <h3>To get all delayed trains:</h3>
     <pre class="lager">GET /delayed</pre>
     <p>Result:</p>
     <pre class="lager">{
   "data": [
-    {
-      "ActivityId": "1500adde-0a5d-1766-08d8-d85aaae62018",
-      "ActivityType": "Avgang",
-      "AdvertisedTimeAtLocation": "2021-03-11T13:03:00.000+01:00",
-      "AdvertisedTrainIdent": "735",
-      "Canceled": false,
-      "EstimatedTimeAtLocation": "2021-03-11T13:15:00.000+01:00",
-      "FromLocation": [
-        {
-          "LocationName": "Hpbg",
-          "Priority": 1,
-          "Order": 0
-        }
-      ],
-      "ToLocation": [
-        {
-          "LocationName": "Cst",
-          "Priority": 1,
-          "Order": 0
-        }
-      ]
-    },
-    {
-      "ActivityId": "1500adde-0a5d-1766-08d8-d85a927d1a39",
-      "ActivityType": "Avgang",
-      "AdvertisedTimeAtLocation": "2021-03-11T13:07:00.000+01:00",
-      "AdvertisedTrainIdent": "233",
-      "Canceled": true,
-      "EstimatedTimeAtLocation": "2021-03-11T13:44:00.000+01:00",
-      "FromLocation": [
-        {
-          "LocationName": "Cst",
-          "Priority": 1,
-          "Order": 0
-        }
-      ],
-      "ToLocation": [
-        {
-          "LocationName": "Nr",
-          "Priority": 1,
-          "Order": 0
-        }
-      ]
-    },
+  {
+    "ActivityId": "1500adde-f75d-c409-08dc-3e613d7638c5",
+    "ActivityType": "Avgang",
+    "AdvertisedTimeAtLocation": "2024-03-22T08:15:00.000+01:00",
+    "AdvertisedTrainIdent": "11316",
+    "Canceled": false,
+    "EstimatedTimeAtLocation": "2024-03-22T08:34:00.000+01:00",
+    "FromLocation": [
+      {
+        "LocationName": "Hie",
+        "Priority": 1,
+        "Order": 0
+      }
+    ],
+    "LocationSignature": "Hbgb",
+    "OperationalTrainNumber": "11316",
+    "ToLocation": [
+      {
+        "LocationName": "Hb",
+        "Priority": 1,
+        "Order": 0
+      }
+    ],
+    "TrainOwner": "Ö-TÅG"
+  },
+  {
+    "ActivityId": "1500adde-f75d-c409-08dc-3e6165572e33",
+    "ActivityType": "Avgang",
+    "AdvertisedTimeAtLocation": "2024-03-22T08:15:00.000+01:00",
+    "AdvertisedTrainIdent": "1707",
+    "Canceled": false,
+    "EstimatedTimeAtLocation": "2024-03-22T08:33:00.000+01:00",
+    "FromLocation": [
+      {
+        "LocationName": "Hb",
+        "Priority": 1,
+        "Order": 0
+      }
+    ],
+    "LocationSignature": "Ög",
+    "OperationalTrainNumber": "1707",
+    "ToLocation": [
+      {
+        "LocationName": "Trg",
+        "Priority": 1,
+        "Order": 0
+      }
+    ],
+    "TrainOwner": "SKANE"
+  },
 ....
 </pre>
 </section>
