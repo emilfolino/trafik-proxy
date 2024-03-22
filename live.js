@@ -24,6 +24,8 @@ const live = {
                     // stop fetching trains
                     console.log("stop fetching");
                     live.fetching = false;
+
+                    live.es.close();
                 }
             });
         });

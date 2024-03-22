@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-console.log(process.env["TRAFIKVERKET_API_KEY"])
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -52,4 +50,4 @@ app.get("/:datafield", (req, res) => fileUtil.routing(req, res));
 
 live.init(io);
 
-server.listen(port, () => console.log('Order api listening on port ' + port));
+server.listen(port, () => console.log('Trafik api listening on port ' + port));
