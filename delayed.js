@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const queries = require('./queries.js');
 
 const delayed = {
-    getTrains: async function getTrains(req, res) {
+    getTrains: async function getTrains() {
         const response = await fetch(
             "https://api.trafikinfo.trafikverket.se/v2/data.json", {
                 method: "POST",

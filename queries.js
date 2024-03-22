@@ -1,9 +1,7 @@
-const config = require("./config/config.json");
-
 const queries = {
     stations: {
         query: `<REQUEST>
-          <LOGIN authenticationkey="${config["API_KEY"]}" />
+          <LOGIN authenticationkey="${process.env["TRAFIKVERKET_API_KEY"]}" />
           <QUERY objecttype="TrainStation" schemaversion="1.4">
                 <FILTER>
                       <EQ name="Advertised" value="true" />
@@ -19,7 +17,7 @@ const queries = {
     },
     messages: {
         query: `<REQUEST>
-          <LOGIN authenticationkey="${config["API_KEY"]}" />
+          <LOGIN authenticationkey="${process.env["TRAFIKVERKET_API_KEY"]}" />
           <QUERY objecttype="TrainMessage" schemaversion="1.6">
                 <INCLUDE>EventId</INCLUDE>
                 <INCLUDE>EndDateTime</INCLUDE>
@@ -37,7 +35,7 @@ const queries = {
     },
     codes: {
         query: `<REQUEST>
-          <LOGIN authenticationkey="${config["API_KEY"]}" />
+          <LOGIN authenticationkey="${process.env["TRAFIKVERKET_API_KEY"]}" />
           <QUERY objecttype="ReasonCode" schemaversion="1">
                 <INCLUDE>Code</INCLUDE>
                 <INCLUDE>GroupDescription</INCLUDE>
@@ -51,7 +49,7 @@ const queries = {
     },
     delayed: {
         query: `<REQUEST>
-          <LOGIN authenticationkey="${config["API_KEY"]}" />
+          <LOGIN authenticationkey="${process.env["TRAFIKVERKET_API_KEY"]}" />
           <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation' schemaversion="1.9">
                 <FILTER>
                 <AND>
