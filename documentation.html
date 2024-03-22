@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Trafik Proxy API documentation</title>
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
@@ -30,6 +32,9 @@
                 </li>
                 <li>
                     <a href="#delayed">Delayed Trains</a>
+                </li>
+                <li>
+                    <a href="#live">Delayed Trains with live position</a>
                 </li>
             </ol>
         </section>
@@ -286,7 +291,29 @@ TrainOwner</pre>
 </pre>
 </section>
 
+    <section id="live">
+        <h2><a href="#live">Delayed Trains with live position</a></h2>
 
+        <p>Connect to socket at <code>https://trafik.emilfolino.se</code>.</p>
+
+        <p>Train positions for delayed train are delivered in the following format.</p>
+
+        <pre class="lager">{
+    train: '28918',
+    position: [ 59.64232211660103, 12.676806451022097 ]
+}</pre>
+
+        <h3>Code example with socket.io-client</h3>
+        <pre>
+<code class="javascript">const socket = io("https://trafik.emilfolino");
+
+socket.on("position", (data) => {
+    console.log(data); // logs { train: '28918', position: [ 59.64232211660103, 12.676806451022097 ] }
+});
+</code>
+</pre>
+
+    </section>
     </article>
 </main>
 
@@ -296,5 +323,8 @@ TrainOwner</pre>
         <p>The API is used in a course given in the Webprogrammering Cluster <a href="https://dbwebb.se">dbwebb</a> at <a href="https://bth.se">Blekinge Tekniska Högskola</a>.</p>
     </div>
 </footer>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
