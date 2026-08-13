@@ -50,7 +50,7 @@ const queries = {
     delayed: {
         query: `<REQUEST>
           <LOGIN authenticationkey="${process.env["TRAFIKVERKET_API_KEY"]}" />
-          <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation' schemaversion="1.9">
+          <QUERY objecttype="TrainAnnouncement" namespace="rail.trafficinfo" orderby='AdvertisedTimeAtLocation' schemaversion="1.9">
                 <FILTER>
                 <AND>
                     <EQ name="ActivityType" value="Avgang" />
